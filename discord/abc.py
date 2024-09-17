@@ -113,7 +113,7 @@ MISSING = utils.MISSING
 
 
 class _Undefined:
-    def __repr__(self) -> str:
+    def __repr__(self):
         return 'see-below'
 
 
