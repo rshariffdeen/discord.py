@@ -151,7 +151,8 @@ async def _purge_helper(
     ret: List[Message] = []
     count = 0
 
-    minimum_time = int((time.time() - 14 * 24 * 60 * 60) * 1000.0 - 1420070400000) << 22
+    minimum_time = int((time.time() - 14 * 24
+                        * 60 * 60) * 1000.0 - 1420070400000) << 22
     strategy = channel.delete_messages if bulk else _single_delete_strategy
 
     async for message in iterator:
@@ -178,11 +179,12 @@ async def _purge_helper(
         count += 1
         ret.append(message)
 
+
     # Some messages remaining to poll
     if count >= 2:
         # more than 2 messages -> bulk delete
         to_delete = ret[-count:]
-        await strategy(to_delete, reason=reason)
+        await strategy(to_delete,reason=reason)
     elif count == 1:
         # delete a single message
         await ret[-1].delete()
