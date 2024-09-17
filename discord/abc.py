@@ -130,7 +130,6 @@ async def _single_delete_strategy(messages: Iterable[Message], *, reason: Option
             # several other race conditions with deletion should fail without continuing,
             # such as the channel being deleted and not found.
             raise
-    break
 
 
 async def _purge_helper(
