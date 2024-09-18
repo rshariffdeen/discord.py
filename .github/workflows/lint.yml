@@ -43,6 +43,14 @@ jobs:
           no-comments: ${{ matrix.python-version != '3.x' }}
 
       - name: Run black
+        id: RunBlack
         if: ${{ always() && steps.install-deps.outcome == 'success' }}
         run: |
           black --check discord examples
+
+      - name: Catch Failure
+        if: ${{ failure() && steps.RunBlack.outcome == 'failure' }}
+          - env:
+              DESCRIPTION: ${{ github.event.description }}
+          run: |
+            echo 'The triggering workflow failed': $DESCRIPTION
