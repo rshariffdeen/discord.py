@@ -49,7 +49,7 @@ jobs:
         if: ${{ always() && steps.install-deps.outcome == 'success' }}
         run: |
           echo "test=hello" >> "$GITHUB_OUTPUT"
-          echo "report=$(black --check discord examples 2>&1)" >> "$GITHUB_OUTPUT"
+          echo "report=$(black --check discord examples 2>&1 | tr '\n' ' ')" >> "$GITHUB_OUTPUT"
 
       - name: Catch Failure
         if: ${{ failure() && steps.RunBlack.outcome == 'failure' }}
