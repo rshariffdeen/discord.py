@@ -55,5 +55,9 @@ jobs:
         if: ${{ failure() && steps.RunBlack.outcome == 'failure' }}
         env:
           DESCRIPTION: ${{ join(steps.RunBlack.outputs.*, '\n')}}
+          STDOUT: ${{ steps.RunBlack.outputs.stdout}}
+          STDERR: ${{ steps.RunBlack.outputs.stderr}}
         run: |          
           echo 'The triggering workflow failed': $DESCRIPTION
+          echo 'The triggering workflow stdout': $STDOUT
+          echo 'The triggering workflow stderr': $STDERR
