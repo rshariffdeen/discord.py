@@ -8,6 +8,8 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.RunBlack.outputs.report }}
     strategy:
       fail-fast: false
       matrix:
@@ -46,11 +48,13 @@ jobs:
         id: RunBlack
         if: ${{ always() && steps.install-deps.outcome == 'success' }}
         run: |
-          black --check discord examples >> $GITHUB_OUTPUT
+          echo "test=hello" >> "$GITHUB_OUTPUT"
+          echo "report=$(black --check discord examples 2>&1) >> $GITHUB_OUTPUT
 
       - name: Catch Failure
         if: ${{ failure() && steps.RunBlack.outcome == 'failure' }}
         env:
           DESCRIPTION: ${{ join(steps.RunBlack.outputs.*, '\n')}}
         run: |
+          
           echo 'The triggering workflow failed': $DESCRIPTION
