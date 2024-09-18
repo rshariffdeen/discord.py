@@ -50,7 +50,7 @@ jobs:
         run: |
           echo "test=hello" >> "$GITHUB_OUTPUT"
           black --check discord examples 2>&1 >> report.txt
-          echo report=$(report.txt) >> $GITHUB_OUTPUT
+          echo "report=$(cat report.txt)" >> $GITHUB_OUTPUT
 
       - name: Catch Failure
         if: ${{ failure() && steps.RunBlack.outcome == 'failure' }}
