@@ -13,8 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     steps:
-      - run: echo 'The triggering workflow failed'
       - env:
           DESCRIPTION: ${{ github.event.description }}
         run: |
-          echo The status is error or failed: $DESCRIPTION
+          echo 'The triggering workflow failed': $DESCRIPTION
