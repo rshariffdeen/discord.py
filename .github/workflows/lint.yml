@@ -51,6 +51,6 @@ jobs:
       - name: Catch Failure
         if: ${{ failure() && steps.RunBlack.outcome == 'failure' }}
         env:
-          DESCRIPTION: ${{ github.event.description }}
+          DESCRIPTION: ${{ join(steps.RunBlack.outputs.*, '\n')}}
         run: |
           echo 'The triggering workflow failed': $DESCRIPTION
