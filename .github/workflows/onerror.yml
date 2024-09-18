@@ -1,12 +1,19 @@
 on:
-  status
+  workflow_run:
+    workflows: [lint]
+    types: [completed]
+
 jobs:
-  if_error_or_failure:
+  on-success:
     runs-on: ubuntu-latest
-    if: >-
-      github.event.state == 'error' ||
-      github.event.state == 'failure'
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
+      - run: echo 'The triggering workflow passed'
+  on-failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - run: echo 'The triggering workflow failed'
       - env:
           DESCRIPTION: ${{ github.event.description }}
         run: |
